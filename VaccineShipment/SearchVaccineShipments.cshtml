@@ -1,0 +1,51 @@
+﻿@model SearchVaccineShipmentsViewModel
+@{
+    ViewData["Title"] = "SearchVaccineShipments";
+}
+
+<h1>Search Vaccine Shipments (all search criteria is optional)</h1>
+<form asp-controller="VaccineShipment" asp-action="SearchVaccineShipments" method="post">
+
+    <div class="form-group">
+        <label>Shipment Date should be after</label>
+        <input asp-for="StartDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Shipment Date should be before</label>
+        <input asp-for="EndDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Choose Vaccine Type</label>
+        <select asp-for="VaccineID" class="form-control">
+            <option value="">None</option>
+            <option value="1">Pfizer</option>
+            <option value="2">Moderna</option>
+            <option value="3">Johnson and Johnson</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label>Choose Name of Facility</label>
+        <select asp-for="FacilityID" asp-items="ViewBag.AllFacilities" class="form-control">
+            <option value="">None</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Search Vaccine Shipments</button>
+</form>
+
+@if (Model.ResultListOfVaccineShipments != null)
+{
+    @if (Model.ResultListOfVaccineShipments.Any())
+    {
+<partial name="VaccineShipments_PartialView" model="Model.ResultListOfVaccineShipments" />
+    }
+    else
+    {
+        <h4>No Vaccine Shipments Meet Your Search :(</h4>
+    }
+    }

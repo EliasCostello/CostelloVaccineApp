@@ -1,0 +1,100 @@
+﻿@model SearchAvailabilityViewModel
+@{ 
+    ViewData["Title"] = "Schedule Vaccine Appointment";
+
+}
+
+<h3>Search Vaccine Availability</h3>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-controller="AppointmentScheduler" asp-action="SearchForAppointmentAvailability" method="post">
+
+<div class="form-group">
+    <label>Choose Vaccine Type</label>
+    <select asp-for="VaccineID" class="form-control">
+        <option value="">None</option>
+        <option value="1">Pfizer</option>
+        <option value="2">Moderna</option>
+        <option value="3">Johnson and Johnson</option>
+    </select>
+</div>
+
+<div class="form-group">
+    <label>Choose Facility</label>
+    <select asp-for="FacilityID" asp-items="ViewBag.AllFacilities" class="form-control"><option value="">None</option></select>
+</div>
+
+<div class="form-group">
+    <label>Appointment Date</label>
+    <input asp-for="AppointmentDate" class="form-control"/>
+</div>
+
+<div class="form-group">
+    <label>Search Start Time</label>
+    <input asp-for="StartTime" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label>Search End Time</label>
+    <input asp-for="EndTime" class="form-control" />
+</div>
+
+<button type="submit" class="btn btn-primary">Search Appointment Availability</button>
+
+</form>
+
+@if (Model.ResultListOfAvailabilities != null)
+{
+    @if (Model.ResultListOfAvailabilities.Any())
+    {
+        <h1>List All Appointment Availabilities</h1>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Facility Name
+                    </th>
+                    <th>
+                        Vaccine Name
+                    </th>
+                    <th>
+                        Availability Date
+                    </th>
+                    <th>
+                        Appointment Start Time
+                    </th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (AppointmentAvailability eachAvailability in Model.ResultListOfAvailabilities)
+                {
+                <tr>
+                    <td>
+                        @eachAvailability.FacilityInventory.Facility.FacilityName
+                    </td>
+                    <td>
+                        @eachAvailability.FacilityInventory.Vaccine.VaccineName
+                    </td>
+                    <td>
+                        @eachAvailability.AppointmentDateStartTime.ToLongDateString()
+                    </td>
+                    <td>
+                        @eachAvailability.AppointmentDateStartTime.ToShortTimeString()
+                    </td>
+
+                    <td>
+                       <a asp-controller="AppointmentScheduler" asp-action="ScheduleAppointment" asp-route-appointmentavailabilityID="@eachAvailability.AppointmentAvailabilityID">Schedule Appointment</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else 
+    { 
+    <h4>No appointment availabilities meet your search criteria</h4>
+    }
+    
+}

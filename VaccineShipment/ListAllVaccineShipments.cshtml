@@ -1,0 +1,76 @@
+﻿@model IEnumerable<CostelloClassLibrary.VaccineShipment>
+
+@{
+    ViewData["Title"] = "ListAllVaccineShipments";
+}
+
+<h1>List All Vaccine Shipments</h1>
+<partial name="VaccineShipments_PartialView" model="Model" />
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>
+        namespace CostelloClassLibrary
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    Number Of Vaccines Shipped
+                </th>
+                <th>
+                    Number Of Vaccines Used
+                </th>
+                <th>
+                    Facility Name
+                </th>
+                <th>
+                    Vaccine Name
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (VaccineShipment eachVaccineShipment in Model) {
+            <tr>
+                <td>
+
+                    @eachVaccineShipment.StartDate.ToShortDateString()
+                </td>
+
+                <td>
+                    @if (eachVaccineShipment.EndDate.HasValue)
+                    {
+                        @eachVaccineShipment.EndDate.Value.ToShortDateString()
+                    }
+                    else
+                    {
+                        @("No end date")
+                    }
+
+                </td>
+                <td>
+                    @eachVaccineShipment.NumberOfVaccinesShipped
+                </td>
+                <td>
+                    @eachVaccineShipment.NumberOfVaccinesUsed
+                </td>
+                <td>
+                    @eachVaccineShipment.Facility.FacilityName
+                </td>
+                <td>
+                    @eachVaccineShipment.Vaccine.VaccineName
+                </td>
+                <td>
+                <a asp-action="Edit" asp-route-id="@item.VaccineShipmentID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VaccineShipmentID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VaccineShipmentID">Delete</a>
+            </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

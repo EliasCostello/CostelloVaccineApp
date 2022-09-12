@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AppointmentAvailability>
+
+@{
+    ViewData["Title"] = "ListAllVaccinesAppointmentsForPatient";
+}
+
+<h1>ListAllVaccinesAppointmentsForPatient</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Facility
+            </th>
+            <th>
+                Vaccine
+            </th>
+            <th>
+                Patient
+            </th>
+            <th>
+               Appointment Date
+            </th>
+            <th>
+                Start Time
+            </th>
+            <th>
+                Current Inventory
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.FacilityInventory.Facility.FacilityName
+            </td>
+            <td>
+                @item.FacilityInventory.Vaccine.VaccineName
+            </td>
+            <td>
+                @item.Patient.FullName
+            </td>
+            <td>
+                @item.AppointmentDateStartTime.Date.ToShortDateString()
+            </td>
+            <td>
+                @item.AppointmentDateStartTime.ToLongTimeString()
+            </td>
+            <td>
+                @item.FacilityInventory.CurrentInventory
+            </td>
+            <td>
+                @if( item.AppointmentDateStartTime >= DateTime.Now.AddHours(-1) && item.AppointmentStatus == AppointmentStatusOptions.Booked)
+                {
+                    <a asp-controller="AppointmentScheduler" asp-action="ConfirmCancelAppointment" asp-route-appointmentAvailabilityID ="@item.AppointmentAvailabilityID"> Cancel Appointment</a>
+                }
+                else
+                {
+                    @("Appointment cannot be cancelled")
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

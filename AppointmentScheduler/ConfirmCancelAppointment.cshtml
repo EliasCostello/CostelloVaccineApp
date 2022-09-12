@@ -1,0 +1,45 @@
+﻿@model AppointmentAvailability
+@{
+    ViewData["Title"] = "Confirm Vaccine Reservation Cancelation";
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<form asp-controller="AppointmentScheduler" asp-action="CancelAppointment" method="post">
+
+    @Html.HiddenFor(m => m.AppointmentDateStartTime)
+    @Html.HiddenFor(m => m.AppointmentDateEndTime)
+    @Html.HiddenFor(m => m.AppointmentAvailabilityID)
+    @Html.HiddenFor(m => m.FacilityInventoryID)
+    @Html.HiddenFor(m => m.PatientId)
+    @*@Html.DisplayFor(model => model.FacilityInventory.Vaccine.VaccineName)
+    @Html.DisplayFor(model => model.FacilityInventory.Facility.FacilityName)*@
+
+    <div class="form-group">
+        <label>Choose Vaccine type</label>
+            @Html.DisplayFor(model => model.FacilityInventory.Vaccine.VaccineName)
+            <select asp-for="FacilityInventory.VaccineID" class="form-control" disabled>
+                    <option value="1">Pfizer</option>
+                    <option value="2">Moderna</option>
+                    <option value="3">Johnson and Johnson</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label>Choose Facility</label>
+            @Html.DisplayFor(model => model.FacilityInventory.Facility.FacilityName)
+
+            <select asp-for="FacilityInventory.FacilityID" asp-items="ViewBag.AllFacilities" class="form-control" disabled>
+            </select>
+        </div>
+
+    <div class="form-group">
+        <label>
+            Appointment Date: @(Model.AppointmentDateStartTime.ToShortDateString())
+        </label><br />
+        <label>Appointment Time: @(Model.AppointmentDateStartTime.ToShortTimeString())</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary" name="btnSubmit" value="Confirm">Confirm</button>
+    <button type="submit" class="btn btn-primary" name="btnSubmit" value="BackToList">Back to Your Appointment List</button>
+</form>

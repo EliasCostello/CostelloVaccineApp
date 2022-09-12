@@ -1,0 +1,64 @@
+﻿@model IEnumerable<CostelloClassLibrary.VaccineExchange>
+
+@{
+    ViewData["Title"] = "ListAllVaccineExchanges";
+}
+
+<h1>List All Vaccine Exchanges</h1>
+
+<p>
+    <a asp-action="MakeVaccineExchange">Make a Vaccine Exchange!</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Exchanged Date
+            </th>
+            <th>
+                Number of Exchanged Doses
+            </th>
+            <th>
+                Vaccine Name
+            </th>
+            <th>
+                Sending Facility Name
+            </th>
+            <th>
+                Receiving Facility Name
+            </th>
+           
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (VaccineExchange eachVaccineShipment in Model)
+        {
+            <tr>
+                <td>
+
+                    @eachVaccineShipment.ExchangedDate.ToShortDateString()
+                </td>
+
+                <td>
+                   
+                        @eachVaccineShipment.ExchangedDoses
+                   
+                   
+                </td>
+                <td>
+                    @eachVaccineShipment.Vaccine.VaccineName
+                </td>
+                <td>
+                    @eachVaccineShipment.SendingFacility.FacilityName
+                </td>
+                <td>
+                    @eachVaccineShipment.ReceivingFacility.FacilityName
+                </td>
+                
+                
+            </tr>
+        }
+    </tbody>
+</table>

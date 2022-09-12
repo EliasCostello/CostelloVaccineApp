@@ -1,0 +1,45 @@
+﻿@model AddVaccineShipmentViewModel
+@{
+    ViewData["Title"] = "Add Vaccine Shipment";
+}
+
+<h3>Add Vaccine Shipment</h3>
+
+<div asp-validation-summary= "All" class="text-danger"></div>
+
+<form asp-controller="VaccineShipment" asp-action="AddVaccineShipment" method="post">
+
+    <div class="form-group">
+        <label>Shipment Start Date</label>
+        <input asp-for="StartDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Shipment End Date</label>
+        <input asp-for="EndDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Choose Vaccine Type</label>
+        <select asp-for="VaccineID" class="form-control">
+            <option value="1">Pfizer</option>
+            <option value="2">Moderna</option>
+            <option value="3">Johnson and Johnson</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+        <label>Choose Name of Facility</label>
+        <select asp-for="FacilityID" asp-items="ViewBag.AllFacilities" class="form-control">
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Number Of Vaccines Shipped</label>
+        <input asp-for="NumberOfVaccinesShipped" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Vaccine Shipment</button>
+</form>

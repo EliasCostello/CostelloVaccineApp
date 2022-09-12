@@ -1,0 +1,80 @@
+﻿<p>
+        <a asp-action="AddVaccineShipment">Add Vaccine Shipment</a>
+    </p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Start Date
+            </th>
+            <th>
+                End Date
+            </th>
+            <th>
+                Number Of Vaccines Shipped
+            </th>
+            <th>
+                Number Of Vaccines Used
+            </th>
+            <th>
+                Facility Name
+            </th>
+            <th>
+                Vaccine Name
+            </th>
+            <th>
+                Facility Admin ID
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (VaccineShipment eachVaccineShipment in Model)
+        {
+            <tr>
+                <td>
+
+                    @eachVaccineShipment.StartDate.ToShortDateString()
+                </td>
+
+                <td>
+                    @if (eachVaccineShipment.EndDate.HasValue)
+                    {
+                        @eachVaccineShipment.EndDate.Value.ToShortDateString()
+                    }
+                    else
+                    {
+                        @("No end date")
+                    }
+
+                </td>
+                <td>
+                    @eachVaccineShipment.NumberOfVaccinesShipped
+                </td>
+                <td>
+                    @eachVaccineShipment.NumberOfVaccinesUsed
+                </td>
+                <td>
+                    @eachVaccineShipment.Facility.FacilityName
+                </td>
+                <td>
+                    @eachVaccineShipment.Vaccine.VaccineName
+                </td>
+                <td>@if (eachVaccineShipment.FacilityAdminID != null)
+                {
+                    @eachVaccineShipment.FacilityAdminID
+                }
+                else
+                {
+                    @("No facility admin.")
+                }
+                </td>
+                <td>
+                        <a asp-action="EditVaccineShipment" asp-route-vaccineShipmentID="@eachVaccineShipment.VaccineShipmentID">Edit</a> |
+                        
+                        <a asp-action="DeleteVaccineShipment" asp-route-vaccineShipmentID="@eachVaccineShipment.VaccineShipmentID">Delete</a>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
